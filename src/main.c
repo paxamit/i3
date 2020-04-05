@@ -27,6 +27,8 @@
 
 #include "sd-daemon.h"
 
+extern uint8_t previous_screen;
+
 /* The original value of RLIMIT_CORE when i3 was started. We need to restore
  * this before starting any other process, since we set RLIMIT_CORE to
  * RLIM_INFINITY for i3 debugging versions. */
@@ -551,6 +553,7 @@ int main(int argc, char *argv[]) {
 
     root_screen = xcb_aux_get_screen(conn, conn_screen);
     root = root_screen->root;
+    previous_screen = UINT8_MAX;
 
     /* Place requests for the atoms we need as soon as possible */
 #define xmacro(atom) \
